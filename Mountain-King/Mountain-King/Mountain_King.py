@@ -25,6 +25,13 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Hosting Mountain King")
         self.resize(255, 50)
 
+    def join(self):
+        joinWidget = JoinWidget(self)
+        self.centralWidget.addWidget(joinWidget)
+        self.centralWidget.setCurrentWidget(joinWidget)
+
+        self.setWindowTitle("Joining Mountain King")
+        self.resize(255, 50)
 
 class StartWidget(QWidget):
     def __init__(self, parent=None):
@@ -32,11 +39,11 @@ class StartWidget(QWidget):
 
         hostButton = QPushButton("&Host")
         hostButton.setFocusPolicy(Qt.NoFocus)
-        joinButton = QPushButton("&Client")
+        joinButton = QPushButton("&Join")
         joinButton.setFocusPolicy(Qt.NoFocus)
 
         hostButton.clicked.connect(self.parent().host)
-        # joinButton.clicked.connect()
+        joinButton.clicked.connect(self.parent().join)
 
         startLayout = QGridLayout()
         startLayout.addWidget(hostButton, 0, 0)
@@ -55,13 +62,32 @@ class HostWidget(QWidget):
         quitButton.setFocusPolicy(Qt.NoFocus)
 
         # startButton.clicked.connect()
-        # quitButton.clicked.connect()
+        quitButton.clicked.connect(QApplication.instance().quit)
 
         hostLayout = QGridLayout()
         hostLayout.addWidget(startButton, 0, 0)
         hostLayout.addWidget(quitButton, 1, 0)
 
         self.setLayout(hostLayout)
+
+
+class JoinWidget(QWidget):
+    def __init__(self, parent=None):
+        super(JoinWidget, self).__init__(parent)
+
+        joinButton = QPushButton("&Join")
+        joinButton.setFocusPolicy(Qt.NoFocus)
+        quitButton = QPushButton("&Quit")
+        quitButton.setFocusPolicy(Qt.NoFocus)
+
+        # joinButton.clicked.connect()
+        quitButton.clicked.connect(QApplication.instance().quit)
+
+        joinLayout = QGridLayout()
+        joinLayout.addWidget(joinButton, 0, 0)
+        joinLayout.addWidget(quitButton, 1, 0)
+
+        self.setLayout(joinLayout)
 
 
 if __name__ == '__main__':
